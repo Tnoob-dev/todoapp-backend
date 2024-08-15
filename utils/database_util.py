@@ -1,7 +1,12 @@
 from typing import Optional
 from datetime import datetime
 from sqlmodel import Field, SQLModel, create_engine
+from dotenv import load_dotenv
+import os
 
+dotenv_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'configs', '.env')
+
+load_dotenv(dotenv_path)
 
 class Tasks(SQLModel, table=True):
     task_id: Optional[int] | None = Field(default=None, primary_key=True)
@@ -18,10 +23,7 @@ class Users(SQLModel, table=True, extend_existing=True):
     password_hashed: str
     created_at: datetime
 
-
-DATABASE_URL = "postgresql://postgres:titi@localhost/apptodo"
-
-engine = create_engine(DATABASE_URL)
+engine = create_engine(os.getenv("DATABASE_URL"))
 
 def create_tables():
     SQLModel.metadata.create_all(engine)
