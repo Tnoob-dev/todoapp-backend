@@ -11,20 +11,15 @@ class Queries(object):
         self.engine = engine
         self.object = object
 
-    def check_existent_user(self, username: str) -> bool:
-
+    def get_user_by_username(self, username: str):
         with Session(self.engine) as session:
             statement = select(self.object).where(
                 self.object.username == username)
-            result = session.exec(statement)
-            return bool(result.first())
-        
-    def return_user(self, username: str):
-        with Session(self.engine) as session:
-            statement = select(self.object).where(
-                self.object.username == username)
-            result = session.exec(statement).one()
+            result = session.exec(statement).first()
             return result
+
+    def check_existent_user(self, username: str) -> bool:
+        return bool(self.get_user_by_username(username))
 
     def add_user(self, user: Type[Users]) -> dict:
         with Session(self.engine) as session:
@@ -57,3 +52,14 @@ class Queries(object):
                 session.rollback()
                 raise HTTPException(
                     status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Can't delete user: {e}")
+                
+    def update_user_hashed_password(self, username: str, value: str):
+        with Session(self.engine) as session:
+            statement = select(self.object).where(
+                self.object.username == username)
+            result = session.exec(statement)
+            user = result.one()
+            
+            user.hashed_password = value
+            
+            return "Password rechanged"

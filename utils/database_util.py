@@ -15,12 +15,10 @@ class Tasks(SQLModel, table=True):
     task_created_at: datetime
     user_id: Optional[int] | None = Field(foreign_key="users.user_id")
 
-
-
 class Users(SQLModel, table=True, extend_existing=True):
     user_id: Optional[int] | None = Field(default=None, primary_key=True)
     username: str
-    password_hashed: str
+    hashed_password: str
     created_at: datetime
 
 engine = create_engine(os.getenv("DATABASE_URL"))
