@@ -1,17 +1,18 @@
 from typing import Annotated
 from fastapi import APIRouter, HTTPException, status, Depends
-from utils.database_util import Tasks, Users, engine
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi.security import OAuth2PasswordRequestForm
 from datetime import datetime, timedelta
-from utils.db_queries import Queries
+from utils.database_util import Users, engine
+from utils.db_queries import UQueries
 from utils.schemas import User, UserInDB
+from .token_utils import create_access_token
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
 from dotenv import load_dotenv
 import os
 
 ph = PasswordHasher()
-user_query = Queries(engine, Users)
+user_query = UQueries(engine, Users)
 router = APIRouter(
     prefix="/auth",
     tags=["auth"]
@@ -51,7 +52,13 @@ async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
     
     try:
         if ph.verify(user.hashed_password, form_data.password):
-            return {"access_token": user.username, "token_type": "bearer"}
+            token = create_access_token(username=user_dict.username, user_id=user_dict.user_id,
+                                        expires_delta=timedelta(minutes=30))
+            return {"access_token": token, "token_type": "bearer"}
     except VerifyMismatchError:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, 
                             detail="Incorrect username or password")
+    
+@router.delete("/{username}")
+async def delete_users(username: str):
+    return user_query.delete_existent_user(username)

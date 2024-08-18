@@ -1,5 +1,4 @@
 from pydantic import BaseModel, field_validator
-from datetime import datetime
 
 class User(BaseModel):
     username: str
@@ -16,6 +15,12 @@ class User(BaseModel):
         if len(value) < 4:
             raise ValueError("Password must be at least 4 characters long")
         return value
+
+class Task(BaseModel):
+    title: str
+    description: str
+    completed: bool = False
     
 class UserInDB(User):
     hashed_password: str
+    

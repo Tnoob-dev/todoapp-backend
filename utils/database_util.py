@@ -12,6 +12,7 @@ class Tasks(SQLModel, table=True):
     task_id: Optional[int] | None = Field(default=None, primary_key=True)
     title: str
     description: str
+    completed: bool = False
     task_created_at: datetime
     user_id: Optional[int] | None = Field(foreign_key="users.user_id")
 
