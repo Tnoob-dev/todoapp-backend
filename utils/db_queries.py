@@ -1,5 +1,4 @@
 from sqlmodel import Session, select
-from sqlalchemy.exc import IntegrityError
 from .database_util import Users
 from typing import Type, Any
 from fastapi import HTTPException, status
@@ -47,19 +46,8 @@ class Queries(object):
                         session.commit()
                         return {"message": "User deleted"}
                 else:
-                    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="user not in DB")
+                    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
             except Exception as e:
                 session.rollback()
                 raise HTTPException(
-                    status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Can't delete user: {e}")
-                
-    def update_user_hashed_password(self, username: str, value: str):
-        with Session(self.engine) as session:
-            statement = select(self.object).where(
-                self.object.username == username)
-            result = session.exec(statement)
-            user = result.one()
-            
-            user.hashed_password = value
-            
-            return "Password rechanged"
+                    status_code=status.HTTP_404_NOT_FOUND, detail=f"Can't delete user. ERROR: {e}")
