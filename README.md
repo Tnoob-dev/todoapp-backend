@@ -31,7 +31,7 @@ The Backend provides the following functionality
 3. Configure the environment:
   * Create a PostgreSQL database and obtain the access credentials.
   * If you have a .env file, create a folder named configs and inside create a .env file, update the .env file with:
-  * * DATABSE_URL
+    * DATABSE_URL
     * ALGORITHM
     * SECRET_KEY
   * Else if you want to do it online, just setup the project according the env aerguments 
