@@ -37,13 +37,13 @@ The Backend provides the following functionality
   * Else if you want to do it online, just setup the project according the env aerguments 
 4. Start the server:
   #### In Development:
-    * uvicorn main:app --reload
+    uvicorn main:app --reload
   #### In Production:
-    * fastapi run main.py
+    fastapi run main.py
 
 ### API
 
-The backend API is documented in the file docs or go to the "<app-link>/docs"
+The backend API is documented in the file docs or go to the "app-link/docs"
 
 ### Contributions
 
