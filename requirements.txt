@@ -16,3 +16,4 @@ argon2-cffi-bindings==21.2.0
 python-jose==3.3.0
 python-multipart==0.0.9
 fastapi[standard]
+psycopg2
