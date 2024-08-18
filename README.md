@@ -8,9 +8,9 @@ The Backend provides the following functionality
 * User creation: New users can create them an account
 * User login: I also provide user login for privacy User - Task
 * User Deletion: Users can be deleted
-* Task Creation: Users can create new tasks with a title, description, and deadline.
+* Task Creation: Users can create new tasks with a title and description.
 * Task Reading: Users can view all their tasks, including their completion status.
-* Task Updating: Users can modify the title, description, deadline, and completion status of a task.
+* Task Updating: Users can modify the completion status of a task.
 * Task Deletion: Users can delete tasks.
 
 ### Technologies
