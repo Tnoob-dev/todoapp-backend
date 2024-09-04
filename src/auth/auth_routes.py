@@ -60,7 +60,7 @@ async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
                             detail="Incorrect username or password")
     
-@router.delete("/{username}")
+@router.delete("/del/{username}")
 async def delete_users(username: str):
     """This path allows the administrator to delete their account, or if also required, allows the user to delete their own account, since it is based on the ID of said user"""
     return user_query.delete_existent_user(username)
