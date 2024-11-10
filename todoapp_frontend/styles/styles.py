@@ -62,7 +62,6 @@ BASE_STYLE = {
         "padding": f"{Size.DEFAULT.value} {Size.EXTRA_LARGE.value}",
         "height": Size.BUTTON_HEIGHT.value,
         "width": "100%",
-        "height": "2rem", 
         "_hover": {"background_color": Color.BUTTON_HOVER.value},
     },
     rx.input: {
