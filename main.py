@@ -19,10 +19,12 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="ToDoApp",
               version="1.0.0",
               lifespan=lifespan)
+origins = ["*"]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://127.0.0.1", "http://localhost", "https://todoapp-frontend-delta.vercel.app/"],
+    # allow_origins=["http://127.0.0.1", "http://localhost", "https://todoapp-frontend-delta.vercel.app/"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
