@@ -1,10 +1,10 @@
 from fastapi import FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
-from src.utils.database_util import create_tables
-from src.auth import auth_routes
-from src.users import users_routes
-from src.tasks import task_routes
+from backend.utils.database_util import create_tables
+from backend.auth import auth_routes
+from backend.users import users_routes
+from backend.tasks import task_routes
 
 # This function is for when the app starts running, to create the tables in the DB if its not already created.
 @asynccontextmanager
@@ -22,7 +22,7 @@ app = FastAPI(title="ToDoApp",
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://127.0.0.1", "http://localhost"],
+    allow_origins=["http://127.0.0.1", "http://localhost", "https://todoapp-frontend-delta.vercel.app/"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
